@@ -1,0 +1,42 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Float!
+  username: String!
+  email: String!
+  password: String!
+}
+
+type UserType {
+  username: String
+  password: String
+}
+
+type JwtTokenType {
+  access_token: String
+}
+
+type Query {
+  finduser: UserType!
+  getString: String!
+  getCurrentUser: UserType!
+}
+
+type Mutation {
+  logIn(args: Args!): JwtTokenType!
+  registerUser(args: RegisterUserInput!): User!
+}
+
+input Args {
+  username: String!
+  password: String!
+}
+
+input RegisterUserInput {
+  username: String
+  email: String
+  password: String
+  repeatPassword: String
+}
