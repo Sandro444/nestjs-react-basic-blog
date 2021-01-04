@@ -18,6 +18,14 @@ async loginUser(username: string, password: string) : Promise<boolean> {
 
 }
 
+async getCurrentUser(username: string, password: string) : Promise<User> {
+  return await this.userRepository.findOne({
+    where: {
+      username: username,
+      password: password
+    }
+  })
+}
   comparePasswords(password: string, repeatPassword: string): boolean {
     return password === repeatPassword;
   }

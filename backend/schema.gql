@@ -21,7 +21,7 @@ type JwtTokenType {
 type Query {
   finduser: UserType!
   getString: String!
-  getCurrentUser: UserType!
+  getCurrentUser: User!
 }
 
 type Mutation {

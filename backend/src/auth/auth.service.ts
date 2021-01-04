@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { User } from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
@@ -9,8 +10,12 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, pass: string): Promise<any> {
-    return (await this.usersService.loginUser(username, pass)) || null;
+  async validateUser(username: string, password: string): Promise<any> {
+    return (await this.usersService.loginUser(username, password)) || null;
+  }
+
+  async getCurrentUser(username, password) : Promise<User> {
+    return await this.usersService.getCurrentUser(username, password)
   }
 
   async login(user: any) {

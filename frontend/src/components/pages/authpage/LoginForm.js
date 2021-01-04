@@ -4,6 +4,7 @@ import { FormFieldWrapper } from "./components";
 
 const LoginForm = () => {
   const { loginHandler } = useLoginForm();
+  
   return (
     <div>
       <h1>Login Form</h1>
@@ -22,11 +23,9 @@ const LoginForm = () => {
         }}
         onSubmit={async (values, { setSubmitting, setErrors }) => {
           const query = await loginHandler(values.username, values.password);
-          console.log(query);
           if (query.message) {
             setErrors({credentials: query.message});
           }
-          setSubmitting(true);
         }}
       >
         {({ isSubmitting, errors }) => (
@@ -41,7 +40,7 @@ const LoginForm = () => {
               <ErrorMessage name="password" component="div" />
             </FormFieldWrapper>
 
-            <button type="submit" disabled={isSubmitting}>
+            <button type="submit" disabled={false}>
               Submit
             </button>
             <ErrorMessage name="credentials" component="div" />
