@@ -1,10 +1,24 @@
-import { useState } from "react";
+import { useState, useMemo, useContext, useEffect } from "react";
+import { AuthContext } from "../../../context/authcontext/authContext";
 import { useQuery } from "@apollo/client";
+import {
+  logInAction,
+  logOutAction,
+} from "../../../context/authcontext/actions";
 export const useAuth = () => {
-  const [authorized, setAuthorized] = useState(false);
-  const [authToken, setAuthToken] = useState("");
-  const localAuthToken = localStorage.getItem("auth-token");
+  const [state, dispatcher] = useContext(AuthContext) || [null, () => null];
+  const localAuthToken = useMemo(() => localStorage.getItem("auth-token"), [
+    state
+  ]);
 
+
+  useEffect(() => {
+    console.log("useefect")
+    if(localAuthToken && state && !state.authorized) {
+      console.log("pijp")
+      dispatcher(logInAction(state));
+    } 
+  },[state])
   /* const { data } = useQuery(LoginQuery, {
     variables: {
       args: {
@@ -14,19 +28,20 @@ export const useAuth = () => {
     },
   });
   console.log(data); */
-  if (localAuthToken) {
-    setAuthorized(true);
-    setAuthToken(localAuthToken);
-  } else {
-  }
+  
 
+  const logOut = () => {
+    console.log("fires")
+    localStorage.clear();
+    dispatcher(logOutAction(state))
+  };
   const makeAuth = (authToken) => {
     localStorage.setItem("auth-token", authToken);
-    setAuthToken(authToken);
+    dispatcher(logInAction(state))
   };
 
   return {
-    authorized,
     makeAuth,
+    logOut,
   };
 };

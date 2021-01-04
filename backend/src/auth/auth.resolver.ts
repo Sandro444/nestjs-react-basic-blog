@@ -5,6 +5,8 @@ import { LoginArgs } from './dto/signjwt.args';
 import { JwtTokenType } from "./dto/JwtToken.type";
 import {GqlAuthGuard} from './gql-auth.guard'
 import { Req, UseGuards } from '@nestjs/common';
+import {CurrentUser} from './current-user.decorator'
+import { User } from 'src/users/user.entity';
 @Resolver()
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
@@ -27,13 +29,9 @@ export class AuthResolver {
   }
  
   @UseGuards(GqlAuthGuard)
-  @Query(returns=>UserType)
-  getCurrentUser(@Req() request):UserType{
-    console.log(request)
-    return {
-      username: "sandro",
-      password: "tsereteli"
-    }
+  @Query(returns=>User)
+  getCurrentUser(@CurrentUser() user: UserType): Promise<User> {
+    return this.authService.getCurrentUser(user.username, user.password)
   }
 
   @Mutation((returns) => JwtTokenType)
