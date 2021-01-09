@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+#eslint
+/frontend/eslintcache
+
 # production
 /build
 
