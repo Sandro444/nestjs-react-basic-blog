@@ -5,8 +5,9 @@ import {useHistory} from 'react-router-dom'
 export const useLoginForm = () => {
   const [loginMutation] = useMutation(LoginMutation);
   const { makeAuth } = useAuth();
-  console.log("this executes: lfhook")
   const history = useHistory()
+
+  const redirectToRegister = () => history.push('/auth/register')
   const loginHandler = async (username, password) => {
     try {
       const answer = await loginMutation({
@@ -23,5 +24,6 @@ export const useLoginForm = () => {
 
   return {
     loginHandler,
+    redirectToRegister
   };
 };

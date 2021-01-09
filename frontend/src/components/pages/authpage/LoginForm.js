@@ -1,15 +1,15 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useLoginForm } from "../../../hooks/common/auth/useLoginForm";
-import { FormFieldWrapper } from "./components";
+import { FormFieldWrapper, FormButtonWrapper} from "./components";
 
 const LoginForm = () => {
-  const { loginHandler } = useLoginForm();
+  const { loginHandler,redirectToRegister } = useLoginForm();
   
   return (
     <div>
       <h1>Login Form</h1>
       <Formik
-        initialValues={{ username: "", password: "" }}
+        initialValues={{ username: "", password: "", credentials:"" }}
         validate={(values) => {
           const errors = {};
           if (!values.username) {
@@ -40,13 +40,14 @@ const LoginForm = () => {
               <ErrorMessage name="password" component="div" />
             </FormFieldWrapper>
 
-            <button type="submit" disabled={false}>
-              Submit
-            </button>
+            <FormButtonWrapper type="submit" disabled={isSubmitting}>Log In</FormButtonWrapper>
+            <FormButtonWrapper onClick={e=>redirectToRegister()}>Register</FormButtonWrapper>
+
             <ErrorMessage name="credentials" component="div" />
           </Form>
         )}
       </Formik>
+
     </div>
   );
 };
