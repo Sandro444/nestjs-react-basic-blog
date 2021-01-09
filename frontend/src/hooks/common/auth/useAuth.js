@@ -13,9 +13,7 @@ export const useAuth = () => {
 
 
   useEffect(() => {
-    console.log("useefect")
     if(localAuthToken && state && !state.authorized) {
-      console.log("pijp")
       dispatcher(logInAction(state));
     } 
   },[state])
@@ -31,7 +29,6 @@ export const useAuth = () => {
   
 
   const logOut = () => {
-    console.log("fires")
     localStorage.clear();
     dispatcher(logOutAction(state))
   };

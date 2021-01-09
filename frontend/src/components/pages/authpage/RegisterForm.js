@@ -1,11 +1,11 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
-import { FormFieldWrapper } from "./components";
+import { FormFieldWrapper, FormButtonWrapper } from "./components";
 
 import useRegisterForm from "../../../hooks/common/auth/useRegisterForm";
 
 const RegisterForm = () => {
-  const { registerHandler } = useRegisterForm();
+  const { registerHandler, redirectToLogin } = useRegisterForm();
 
   return (
     <div>
@@ -16,6 +16,7 @@ const RegisterForm = () => {
           email: "",
           password: "",
           repeatPassword: "",
+          credentials: ""
         }}
         validate={(values) => {
           const errors = {};
@@ -31,15 +32,12 @@ const RegisterForm = () => {
         onSubmit={async (values, {  setErrors }) => {
           const query = await registerHandler(values.username, values.email, values.password, values.repeatPassword);
           if (query.message) {
-            console.log("message")
-            setErrors({credentials: "message"});
+            setErrors({credentials: query.message});
           }
         }}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, errors }) => (
           <Form>
-                        <ErrorMessage name="credentials" component="div" />
-
             <FormFieldWrapper>
               <Field type="text" name="username" />
               <ErrorMessage name="username" component="div" />
@@ -60,10 +58,10 @@ const RegisterForm = () => {
               <ErrorMessage name="repeatPassword" component="div" />
             </FormFieldWrapper>
 
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
-
+          
+            <FormButtonWrapper type="submit" disabled={isSubmitting}>Register</FormButtonWrapper>
+            <FormButtonWrapper onClick={e=>redirectToLogin()}>Log In</FormButtonWrapper>
+            <ErrorMessage name="credentials" component="div" />
           </Form>
         )}
       </Formik>

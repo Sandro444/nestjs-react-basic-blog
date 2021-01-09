@@ -24,7 +24,8 @@ const useRegisterForm = () => {
       };
     }
   };
-  return { registerHandler };
+  const redirectToLogin = () => history.push("/auth/login")
+  return { registerHandler,redirectToLogin };
 };
 
 export default useRegisterForm;
