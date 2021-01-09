@@ -16,3 +16,13 @@ export const FormFieldWrapper = styled.div`
     padding: 15px;
     border-bottom: 2px solid grey;
 `
+
+export const FormButtonWrapper = styled.button`
+    height: 30px;
+    width: 100px;
+    padding: 4px;
+    color: white;
+    border-radius: 20px;
+    background-color: red;
+    border: none;
+`
