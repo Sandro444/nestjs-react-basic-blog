@@ -4,9 +4,23 @@ import "./index.css";
 import {ContextLayer} from "./ContextLayer";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider,HttpLink, ApolloLink, concat } from "@apollo/client";
+
+const httpLink = new HttpLink({ uri: 'http://localhost:3001/graphql' });
+
+const authMiddleware = new ApolloLink((operation, forward) => {
+  operation.setContext(({ headers = {} }) => ({
+    headers: {
+      ...headers,
+      authorization: `Bearer ${localStorage.getItem('auth-token') || null}`,
+    }
+  }));
+
+  return forward(operation);
+})
+
 const client = new ApolloClient({
-  uri: "http://localhost:3001/graphql",
+  link: concat(authMiddleware, httpLink),
   cache: new InMemoryCache(),
 });
 
@@ -21,7 +35,3 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

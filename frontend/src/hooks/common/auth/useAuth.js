@@ -1,6 +1,7 @@
 import { useState, useMemo, useContext, useEffect } from "react";
-import { AuthContext } from "../../../context/authcontext/authContext";
 import { useQuery } from "@apollo/client";
+import { GetCurrentUserQuery } from "../../../gql-queries/index";
+import { AuthContext } from "../../../context/authcontext/authContext";
 import {
   logInAction,
   logOutAction,
@@ -8,37 +9,36 @@ import {
 export const useAuth = () => {
   const [state, dispatcher] = useContext(AuthContext) || [null, () => null];
   const localAuthToken = useMemo(() => localStorage.getItem("auth-token"), [
-    state
+    state,
   ]);
-
-
   useEffect(() => {
-    if(localAuthToken && state && !state.authorized) {
+    if (localAuthToken && state && !state.authorized) {
       dispatcher(logInAction(state));
-    } 
-  },[state])
-  /* const { data } = useQuery(LoginQuery, {
-    variables: {
-      args: {
-        username: "sandro",
-        password: "password",
-      },
-    },
+    }
+  }, [state]);
+  const { data, loading, refetch } = useQuery(GetCurrentUserQuery, {
+    fetchPolicy: 'no-cache',
+    skip: !state.authorized,
   });
-  console.log(data); */
   
+  useEffect(() => {
+    if(!loading && !data){
+      logOut()
+    }
+  },[data, loading])
 
   const logOut = () => {
     localStorage.clear();
-    dispatcher(logOutAction(state))
+    dispatcher(logOutAction(state));
   };
   const makeAuth = (authToken) => {
     localStorage.setItem("auth-token", authToken);
-    dispatcher(logInAction(state))
+    dispatcher(logInAction(state));
   };
 
   return {
     makeAuth,
     logOut,
+    data,
   };
 };
