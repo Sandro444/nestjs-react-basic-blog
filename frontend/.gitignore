@@ -9,7 +9,7 @@
 /coverage
 
 #eslint
-/frontend/eslintcache
+.eslintcache
 
 # production
 /build
