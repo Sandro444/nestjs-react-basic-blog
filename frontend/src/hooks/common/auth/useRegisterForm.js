@@ -16,16 +16,17 @@ const useRegisterForm = () => {
           },
         },
       });
-      history.push("/auth/login");
+      if (answer.data) {
+        history.push("/auth/login");
+      }
     } catch (e) {
-        console.log(e["message"])
       return {
         message: e["message"],
       };
     }
   };
-  const redirectToLogin = () => history.push("/auth/login")
-  return { registerHandler,redirectToLogin };
+  const redirectToLogin = () => history.push("/auth/login");
+  return { registerHandler, redirectToLogin };
 };
 
 export default useRegisterForm;
