@@ -15,15 +15,15 @@ import BlogsPage from "./components/pages/blogspage/BlogsPage";
 import HomePage from "./components/pages/homepage/HomePage";
 
 import "./App.css";
+import ProfilePage from "./components/pages/profilepage/ProfilePage";
 
 function App() {
   const [state, dispatch] = useContext(AuthContext);
-  console.log("state", state);
+  
   return (
     <Switch>
       {!(state?.authorized) && (
         <Switch>
-          {console.log("state not authorized")}
           <Route path="/auth/login">
             <AuthPage />
           </Route>
@@ -37,7 +37,6 @@ function App() {
       )}
       {(state?.authorized) && (
         <Switch>
-                    {console.log("state  authorized")}
           <Route exact path="/auth">
             <Redirect to="/index" />
           </Route>
@@ -49,6 +48,9 @@ function App() {
           </Route>
           <Route path="/blogs">
             <BlogsPage />
+          </Route>
+          <Route path="/profile">
+            <ProfilePage />
           </Route>
           <Route exact path="/">
             {!state?.authorized ? <HomePage /> : <Redirect to="/auth/login" />}
