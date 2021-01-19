@@ -10,12 +10,13 @@ import { BlogsModule } from './blogs/blogs.module';
 @Module({
   imports: [
     GraphQLModule.forRoot({
-      include: [],
+      include: [AuthModule,UsersModule, BlogsModule],
       playground: true,
       autoSchemaFile: 'schema.gql',
     }),
     AuthModule,
     UsersModule,
+    BlogsModule,
     TypeOrmModule.forRoot({
       name: 'default',
       type: 'postgres',
@@ -35,7 +36,7 @@ import { BlogsModule } from './blogs/blogs.module';
         migrationsDir: 'src/migration',
       },
     }),
-    BlogsModule,
+  
   ],
   controllers: [AppController],
   providers: [AppService],

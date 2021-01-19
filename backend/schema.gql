@@ -2,6 +2,13 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Blog {
+  id: Float!
+  title: String!
+  content: String!
+  author: User!
+}
+
 type User {
   id: Float!
   username: String!
@@ -27,6 +34,7 @@ type Query {
 type Mutation {
   logIn(args: Args!): JwtTokenType!
   registerUser(args: RegisterUserInput!): User!
+  createBlog(record: CreateBlogRecord!): Blog!
 }
 
 input Args {
@@ -39,4 +47,10 @@ input RegisterUserInput {
   email: String
   password: String
   repeatPassword: String
+}
+
+input CreateBlogRecord {
+  title: String!
+  content: String!
+  author: Int
 }
