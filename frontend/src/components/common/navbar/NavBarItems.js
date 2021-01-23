@@ -4,6 +4,7 @@ import { NavBarItemWrapper } from "./components";
 
 const NavBarItems = () => {
     const {logOut, data} = useAuth()
+    
     return <>
         <NavBarItem linkTo="/index">Home</NavBarItem>
         <NavBarItem linkTo="/blogs">Blogs</NavBarItem>

@@ -20,6 +20,8 @@ export const useAuth = () => {
     fetchPolicy: 'no-cache',
     skip: !state.authorized,
   });
+
+  useEffect(() => console.log('auth loading', loading), [loading])
   
   useEffect(() => {
     if(!loading && !data){
