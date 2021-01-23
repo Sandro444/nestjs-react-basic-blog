@@ -1,5 +1,3 @@
-import {registerValidationSchema} from './RegisterFormValidation'
-
-export {
-    registerValidationSchema
-}
+import { registerValidationSchema } from "./RegisterFormValidation";
+import { loginValidationSchema } from "./LoginFormValidation";
+export { registerValidationSchema, loginValidationSchema };
