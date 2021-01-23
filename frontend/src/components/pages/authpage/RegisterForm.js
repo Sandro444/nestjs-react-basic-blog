@@ -4,6 +4,8 @@ import { FormFieldWrapper, FormButtonWrapper } from "./components";
 
 import useRegisterForm from "../../../hooks/common/auth/useRegisterForm";
 
+import { registerValidationSchema } from "../../../validations";
+
 const RegisterForm = () => {
   const { registerHandler, redirectToLogin } = useRegisterForm();
 
@@ -16,23 +18,18 @@ const RegisterForm = () => {
           email: "",
           password: "",
           repeatPassword: "",
-          credentials: ""
+          credentials: "",
         }}
-        validate={(values) => {
-          const errors = {};
-          if (!values.username) {
-            errors.username = "Required";
-          } else if (values.username.length <= 3) {
-            errors.username = "minimum 4 letter of username";
-          } else if (!values.password) {
-            errors.password = "Required";
-          }
-          return errors;
-        }}
-        onSubmit={async (values, {  setErrors }) => {
-          const query = await registerHandler(values.username, values.email, values.password, values.repeatPassword);
+        validationSchema={registerValidationSchema}
+        onSubmit={async (values, { setErrors }) => {
+          const query = await registerHandler(
+            values.username,
+            values.email,
+            values.password,
+            values.repeatPassword
+          );
           if (query.message) {
-            setErrors({credentials: query.message});
+            setErrors({ credentials: query.message });
           }
         }}
       >
@@ -55,12 +52,15 @@ const RegisterForm = () => {
 
             <FormFieldWrapper>
               <Field type="password" name="repeatPassword" />
-              <ErrorMessage name="repeatPassword" component="div" />
+              <ErrorMessage name="repeatPassword" render={(msg) => <p>{msg}</p>} />
             </FormFieldWrapper>
 
-          
-            <FormButtonWrapper type="submit" disabled={isSubmitting}>Register</FormButtonWrapper>
-            <FormButtonWrapper onClick={e=>redirectToLogin()}>Log In</FormButtonWrapper>
+            <FormButtonWrapper type="submit" disabled={isSubmitting}>
+              Register
+            </FormButtonWrapper>
+            <FormButtonWrapper onClick={(e) => redirectToLogin()}>
+              Log In
+            </FormButtonWrapper>
             <ErrorMessage name="credentials" component="div" />
           </Form>
         )}

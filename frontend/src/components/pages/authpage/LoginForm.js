@@ -1,7 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useLoginForm } from "../../../hooks/common/auth/useLoginForm";
 import { FormFieldWrapper, FormButtonWrapper} from "./components";
-
+import { loginValidationSchema } from "../../../validations";
 const LoginForm = () => {
   const { loginHandler,redirectToRegister } = useLoginForm();
   
@@ -10,17 +10,7 @@ const LoginForm = () => {
       <h1>Login Form</h1>
       <Formik
         initialValues={{ username: "", password: "", credentials:"" }}
-        validate={(values) => {
-          const errors = {};
-          if (!values.username) {
-            errors.username = "Required";
-          } else if (values.username.length <= 3) {
-            errors.username = "minimum 4 letter of username";
-          } else if (!values.password) {
-            errors.password = "Required";
-          }
-          return errors;
-        }}
+        validationSchema={loginValidationSchema}
         onSubmit={async (values, { setSubmitting, setErrors }) => {
           const query = await loginHandler(values.username, values.password);
           if (query.message) {
