@@ -29,12 +29,20 @@ type Query {
   finduser: UserType!
   getString: String!
   getCurrentUser: User!
+  allBlogs: [Blog!]!
+  findOneBlog(record: FindOneBlogRecord!): Blog!
+}
+
+input FindOneBlogRecord {
+  id: Int!
 }
 
 type Mutation {
   logIn(args: Args!): JwtTokenType!
   registerUser(args: RegisterUserInput!): User!
   createBlog(record: CreateBlogRecord!): Blog!
+  updateBlog(record: UpdateBlogRecord!): Blog!
+  deleteBlog(record: FindOneBlogRecord!): String!
 }
 
 input Args {
@@ -52,5 +60,12 @@ input RegisterUserInput {
 input CreateBlogRecord {
   title: String!
   content: String!
+  author: Int
+}
+
+input UpdateBlogRecord {
+  id: Int!
+  title: String
+  content: String
   author: Int
 }
