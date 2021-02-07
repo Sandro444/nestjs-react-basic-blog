@@ -1,8 +1,10 @@
-import Layout from "../../common/layout/Layout";
+import Layout from '../../common/layout/Layout';
 const BlogsPage = () => {
-    return <Layout>
-        <h1>blogspage</h1>
+  return (
+    <Layout>
+      <LatestBlogs />
     </Layout>
-}
+  );
+};
 
-export default BlogsPage
+export default BlogsPage;
