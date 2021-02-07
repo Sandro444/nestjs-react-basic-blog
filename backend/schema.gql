@@ -6,14 +6,21 @@ type Blog {
   id: Float!
   title: String!
   content: String!
+  createdAt: DateTime!
   author: User!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type User {
   id: Float!
   username: String!
   email: String!
   password: String!
+  createdAt: DateTime!
 }
 
 type UserType {
@@ -29,8 +36,19 @@ type Query {
   finduser: UserType!
   getString: String!
   getCurrentUser: User!
-  allBlogs: [Blog!]!
+  allBlogs(filter: AllBlogsFilterInput): [Blog!]!
   findOneBlog(record: FindOneBlogRecord!): Blog!
+}
+
+input AllBlogsFilterInput {
+  take: Int
+  skip: Int
+  createdAtSort: SortEnum
+}
+
+enum SortEnum {
+  ASC
+  DESC
 }
 
 input FindOneBlogRecord {

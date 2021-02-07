@@ -1,9 +1,11 @@
-import {FooterContent,FooterWrapper} from './components'
+import { FooterContent, FooterWrapper } from './components';
 
 const Footer = () => {
-    return <FooterWrapper>
-        <FooterContent>stack: React, Nest, styled-components </FooterContent>
+  return (
+    <FooterWrapper>
+      <FooterContent>stack: React, Nest, styled-components </FooterContent>
     </FooterWrapper>
-}
+  );
+};
 
-export default Footer
+export default Footer;

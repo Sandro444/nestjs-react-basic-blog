@@ -1,10 +1,10 @@
-import { useReducer } from "react";
-import App from "./App";
+import { useReducer } from 'react';
+import App from './App';
 import {
   AuthContext,
   AuthReducer,
   initialState,
-} from "./context/authcontext/authContext";
+} from './context/authcontext/authContext';
 export const ContextLayer = () => {
   const [state, dispatch] = useReducer(AuthReducer, initialState);
   return (

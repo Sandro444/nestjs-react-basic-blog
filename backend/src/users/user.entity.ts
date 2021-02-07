@@ -21,6 +21,10 @@ export class User {
   @Column({ default: true })
   password: string;
 
-  @OneToMany(type => Blog, blog => blog.author)
-  blogs?: Blog[]
+  @Field((type) => Date)
+  @Column({ type: 'timestamp', default: new Date(), name: 'created_at' })
+  createdAt: Date;
+
+  @OneToMany((type) => Blog, (blog) => blog.author)
+  blogs?: Blog[];
 }

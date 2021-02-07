@@ -1,15 +1,15 @@
-import { createContext } from "react";
+import { createContext } from 'react';
 
 const AuthContext = createContext();
 
 const AuthReducer = (state, action) => {
   switch (action.type) {
-    case "logIn":
+    case 'logIn':
       return {
         ...state,
         authorized: true,
       };
-    case "logOut":
+    case 'logOut':
       return {
         ...state,
         authorized: false,
