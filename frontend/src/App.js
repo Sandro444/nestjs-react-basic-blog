@@ -1,28 +1,30 @@
-import { useContext, useReducer } from "react";
+import { useContext, useReducer } from 'react';
 
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from 'react-router-dom';
 
-import { useAuth } from "./hooks/common/auth/useAuth";
+import { useAuth } from './hooks/common/auth/useAuth';
 
 import {
   AuthContext,
   AuthReducer,
   initialState,
-} from "./context/authcontext/authContext";
+} from './context/authcontext/authContext';
 
-import AuthPage from "./components/pages/authpage/AuthPage";
-import BlogsPage from "./components/pages/blogspage/BlogsPage";
-import HomePage from "./components/pages/homepage/HomePage";
+import AuthPage from './components/pages/authpage/AuthPage';
+import BlogsPage from './components/pages/blogspage/BlogsPage';
+import HomePage from './components/pages/homepage/HomePage';
 
-import "./App.css";
-import ProfilePage from "./components/pages/profilepage/ProfilePage";
+import './App.css';
+import ProfilePage from './components/pages/profilepage/ProfilePage';
+import { Spinner } from './components/common/spinner/Spinner';
 
 function App() {
+  const { data, currentUserLoading } = useAuth();
   const [state, dispatch] = useContext(AuthContext);
-  
+
   return (
     <Switch>
-      {!(state?.authorized) && (
+      {!state?.authorized && currentUserLoading === false && (
         <Switch>
           <Route path="/auth/login">
             <AuthPage />
@@ -35,7 +37,14 @@ function App() {
           </Route>
         </Switch>
       )}
-      {(state?.authorized) && (
+      {!state?.authorized && currentUserLoading !== false && (
+        <Switch>
+          <Route path="/">
+            <Spinner />
+          </Route>
+        </Switch>
+      )}
+      {state?.authorized && (
         <Switch>
           <Route exact path="/auth">
             <Redirect to="/index" />
@@ -55,7 +64,7 @@ function App() {
           <Route exact path="/">
             {!state?.authorized ? <HomePage /> : <Redirect to="/auth/login" />}
           </Route>
-          <Route path="/">{"404 not found"}</Route>
+          <Route path="/">{'404 not found'}</Route>
         </Switch>
       )}
     </Switch>

@@ -1,11 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserRepository } from 'src/users/user.repository';
-import { DeleteResult } from 'typeorm';
 import { Blog } from './blog.entity';
 import { BlogRepository } from './blog.repository';
 import { CreateBlogArgs } from './dto/create-blog.dto';
 import { FindOneBlogArgs } from './dto/finde-one-blog.dto';
 import { UpdateBlogArgs, UpdateBlogRecord } from './dto/update-blog.dto';
+import { AllBlogsFilter } from './dto/all-blogs.filter';
+import { FindManyOptions } from 'typeorm';
 
 @Injectable()
 export class BlogsService {
@@ -29,10 +30,20 @@ export class BlogsService {
     return returnBlogType;
   }
 
-  async allBlogs(): Promise<Blog[]> {
-    return await this.blogRepository.find({
+  async allBlogs(filter?: AllBlogsFilter): Promise<Blog[]> {
+    const props: Partial<FindManyOptions<Blog>> = {
       relations: ['author'],
-    });
+    };
+    if (filter?.filter?.createdAtSort) {
+      props.order = { createdAt: filter?.filter?.createdAtSort };
+    }
+    if (filter?.filter?.take) {
+      props.take = filter?.filter?.take;
+    }
+    if (filter?.filter?.skip) {
+      props.skip = filter?.filter?.skip;
+    }
+    return await this.blogRepository.find(props);
   }
 
   async findOneBlog(findOneBlogArgs: FindOneBlogArgs): Promise<Blog> {

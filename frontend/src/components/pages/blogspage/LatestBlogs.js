@@ -1,0 +1,27 @@
+import { useLatestBlogs } from '../../../hooks/pages/blogspage/useLatestBlogs';
+import { Spinner } from '../../../components/common/spinner/Spinner';
+import BlogPreview from './BlogPreview';
+
+const LatestBlogs = () => {
+  const { blogsData, blogsLoading } = useLatestBlogs();
+
+  if (blogsLoading) return <Spinner />;
+  else {
+    return (
+      <div>
+        {blogsData?.allBlogs?.map((blog) => {
+          return (
+            <BlogPreview
+              key={blog.id}
+              title={blog.title}
+              content={blog.content}
+              id={blog.id}
+            />
+          );
+        })}
+      </div>
+    );
+  }
+};
+
+export default LatestBlogs;

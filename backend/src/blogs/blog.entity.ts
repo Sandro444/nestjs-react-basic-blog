@@ -1,7 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { User } from 'src/users/user.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
- 
+
 @ObjectType()
 @Entity()
 export class Blog {
@@ -17,7 +17,11 @@ export class Blog {
   @Column()
   content: string;
 
+  @Field((type) => Date)
+  @Column({ type: 'timestamp', default: new Date(), name: 'created_at' })
+  createdAt: Date;
+
   @Field(() => User)
-  @ManyToOne(type => User, user => user.blogs )
+  @ManyToOne((type) => User, (user) => user.blogs)
   author: User;
 }
