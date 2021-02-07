@@ -10,7 +10,7 @@ import { BlogsModule } from './blogs/blogs.module';
 @Module({
   imports: [
     GraphQLModule.forRoot({
-      include: [AuthModule,UsersModule, BlogsModule],
+      include: [AuthModule, UsersModule, BlogsModule],
       playground: true,
       autoSchemaFile: 'schema.gql',
     }),
@@ -36,7 +36,6 @@ import { BlogsModule } from './blogs/blogs.module';
         migrationsDir: 'src/migration',
       },
     }),
-  
   ],
   controllers: [AppController],
   providers: [AppService],

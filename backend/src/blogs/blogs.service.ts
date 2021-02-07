@@ -30,7 +30,9 @@ export class BlogsService {
   }
 
   async allBlogs(): Promise<Blog[]> {
-    return await this.blogRepository.find();
+    return await this.blogRepository.find({
+      relations: ['author'],
+    });
   }
 
   async findOneBlog(findOneBlogArgs: FindOneBlogArgs): Promise<Blog> {
