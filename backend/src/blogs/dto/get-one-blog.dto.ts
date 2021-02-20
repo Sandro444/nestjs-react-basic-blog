@@ -1,13 +1,13 @@
 import { ArgsType, Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
-class FindOneBlogRecord {
+class GetOneBlogRecord {
   @Field((type) => Int)
   id: number;
 }
 
 @ArgsType()
-export class FindOneBlogArgs {
-  @Field((type) => FindOneBlogRecord)
-  record: FindOneBlogRecord;
+export class GetOneBlogArgs {
+  @Field((type) => GetOneBlogRecord)
+  record: GetOneBlogRecord;
 }

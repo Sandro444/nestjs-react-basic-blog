@@ -3,7 +3,7 @@ import { UserRepository } from 'src/users/user.repository';
 import { Blog } from './blog.entity';
 import { BlogRepository } from './blog.repository';
 import { CreateBlogArgs } from './dto/create-blog.dto';
-import { FindOneBlogArgs } from './dto/finde-one-blog.dto';
+import { GetOneBlogArgs } from './dto/get-one-blog.dto';
 import { UpdateBlogArgs, UpdateBlogRecord } from './dto/update-blog.dto';
 import { AllBlogsFilter } from './dto/all-blogs.filter';
 import { FindManyOptions } from 'typeorm';
@@ -46,8 +46,10 @@ export class BlogsService {
     return await this.blogRepository.find(props);
   }
 
-  async findOneBlog(findOneBlogArgs: FindOneBlogArgs): Promise<Blog> {
-    return await this.blogRepository.findOne(findOneBlogArgs.record.id);
+  async getOneBlog(getOneBlogArgs: GetOneBlogArgs): Promise<Blog> {
+    return await this.blogRepository.findOne(getOneBlogArgs.record.id, {
+      relations: ['author'],
+    });
   }
 
   async updateBlog(updateBlogArgs: UpdateBlogArgs): Promise<Blog> {
@@ -64,7 +66,7 @@ export class BlogsService {
     });
   }
 
-  async deleteBlog(deleteBlogArgs: FindOneBlogArgs): Promise<string> {
+  async deleteBlog(deleteBlogArgs: GetOneBlogArgs): Promise<string> {
     try {
       await this.blogRepository.delete(deleteBlogArgs.record.id);
       return 'success';

@@ -2,7 +2,7 @@ import { useContext, useReducer } from 'react';
 
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import { useAuth } from './hooks/common/auth/useAuth';
+import { useAuth } from './hooks';
 
 import {
   AuthContext,
@@ -55,9 +55,12 @@ function App() {
           <Route path="/index">
             <HomePage />
           </Route>
-          <Route path="/blogs">
-            <BlogsPage />
-          </Route>
+          <Route
+            path="/blogs/:id?"
+            render={({ match }) => {
+              return <BlogsPage id={match.params.id} />;
+            }}
+          />
           <Route path="/profile">
             <ProfilePage />
           </Route>

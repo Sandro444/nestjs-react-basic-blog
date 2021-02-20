@@ -12,7 +12,7 @@ import {
   concat,
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
-import { useAuth } from './hooks/common/auth/useAuth';
+import { useAuth } from './hooks';
 
 const useLogoutWrapper = () => {
   const { logOut } = useAuth();

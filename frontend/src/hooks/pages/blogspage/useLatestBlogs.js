@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { AllBlogsQuery } from '../../../gql-queries';
-export const useLatestBlogs = () => {
+const useLatestBlogs = () => {
   const { data: blogsData, loading: blogsLoading } = useQuery(AllBlogsQuery, {
     variables: {
       filter: {
@@ -15,3 +15,5 @@ export const useLatestBlogs = () => {
     blogsLoading,
   };
 };
+
+export default useLatestBlogs;
