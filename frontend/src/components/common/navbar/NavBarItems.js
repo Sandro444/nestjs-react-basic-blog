@@ -9,6 +9,7 @@ const NavBarItems = () => {
     <>
       <NavBarItem linkTo="/index">Home</NavBarItem>
       <NavBarItem linkTo="/blogs">Blogs</NavBarItem>
+      <NavBarItem linkTo="/create-blog">Create Blog</NavBarItem>
       <NavBarItem linkTo="/profile">
         {' '}
         {`${data?.getCurrentUser?.username || ''}'s`} Profile

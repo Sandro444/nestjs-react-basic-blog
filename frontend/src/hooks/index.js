@@ -4,7 +4,7 @@ import useAuthPage from './pages/authpage/useAuthPage';
 import useAuth from './common/auth/useAuth';
 import useLoginForm from './common/auth/useLoginForm';
 import useRegisterForm from './common/auth/useRegisterForm';
-
+import useCreateBlogPage from './pages/createblogpage/useCreateBlogPage';
 export {
   useAuth,
   useSingleBlog,
@@ -12,4 +12,5 @@ export {
   useLoginForm,
   useAuthPage,
   useLatestBlogs,
+  useCreateBlogPage,
 };
