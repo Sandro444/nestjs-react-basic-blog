@@ -13,6 +13,7 @@ import {
 import AuthPage from './components/pages/authpage/AuthPage';
 import BlogsPage from './components/pages/blogspage/BlogsPage';
 import HomePage from './components/pages/homepage/HomePage';
+import CreateBlogPage from './components/pages/createblogpage/CreateBlogPage';
 
 import './App.css';
 import ProfilePage from './components/pages/profilepage/ProfilePage';
@@ -60,6 +61,9 @@ function App() {
           </Route>
           <Route path="/profile">
             <ProfilePage />
+          </Route>
+          <Route path="/create-blog">
+            <CreateBlogPage />
           </Route>
           <Route exact path="/">
             {!state?.authorized ? <HomePage /> : <Redirect to="/auth/login" />}
