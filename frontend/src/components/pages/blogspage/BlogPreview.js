@@ -1,8 +1,10 @@
+import { Link } from 'react-router-dom';
 import {
   BlogPreviewWrapper,
   BlogPreviewHeader,
   BlogPreviewContent,
   BlogPreviewButtons,
+  BlogSeeMoreButton,
 } from './components';
 
 const BlogPreview = ({ title, content, id }) => {
@@ -11,7 +13,9 @@ const BlogPreview = ({ title, content, id }) => {
       <BlogPreviewHeader>{title}</BlogPreviewHeader>
       <BlogPreviewContent>{content}</BlogPreviewContent>
       <BlogPreviewButtons>
-        <button>more</button>
+        <Link to={`/blogs/${id}`}>
+          <BlogSeeMoreButton>more</BlogSeeMoreButton>
+        </Link>
       </BlogPreviewButtons>
     </BlogPreviewWrapper>
   );

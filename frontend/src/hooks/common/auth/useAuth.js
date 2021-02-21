@@ -6,7 +6,7 @@ import {
   logInAction,
   logOutAction,
 } from '../../../context/authcontext/actions';
-export const useAuth = () => {
+const useAuth = () => {
   const [state, dispatcher] = useContext(AuthContext) || [null, () => null];
   const localAuthToken = useMemo(() => localStorage.getItem('auth-token'), [
     state,
@@ -45,3 +45,5 @@ export const useAuth = () => {
     currentUserLoading,
   };
 };
+
+export default useAuth;

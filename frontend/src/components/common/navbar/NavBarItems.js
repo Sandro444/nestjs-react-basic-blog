@@ -1,5 +1,5 @@
 import NavBarItem from './NavBarItem';
-import { useAuth } from '../../../hooks/common/auth/useAuth';
+import { useAuth } from '../../../hooks';
 import { NavBarItemWrapper } from './components';
 
 const NavBarItems = () => {

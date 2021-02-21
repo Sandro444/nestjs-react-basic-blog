@@ -1,5 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useLoginForm } from '../../../hooks/common/auth/useLoginForm';
+import { useLoginForm } from '../../../hooks';
 import { FormFieldWrapper, FormButtonWrapper } from './components';
 import { loginValidationSchema } from '../../../validations';
 const LoginForm = () => {
