@@ -1,7 +1,7 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 const RegisterMutation = gql`
-mutation ($args:RegisterUserInput!){
-    registerUser(args:$args){
+  mutation registerUser($args: RegisterUserInput!) {
+    registerUser(args: $args) {
       username
       email
       password

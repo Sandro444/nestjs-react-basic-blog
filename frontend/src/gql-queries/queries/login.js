@@ -1,6 +1,6 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 const LoginMutation = gql`
-  mutation($args: Args!) {
+  mutation logIn($args: Args!) {
     logIn(args: $args) {
       access_token
     }

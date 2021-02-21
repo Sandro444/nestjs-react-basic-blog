@@ -12,7 +12,19 @@ import {
   concat,
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
+
+import { transitions, positions, Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
 import { useAuth } from './hooks';
+
+const options = {
+  // you can also just use 'bottom center'
+  position: positions.TOP_CENTER,
+  timeout: 5000,
+  offset: '30px',
+  // you can also just use 'scale'
+  transition: transitions.SCALE,
+};
 
 const useLogoutWrapper = () => {
   const { logOut } = useAuth();
@@ -44,7 +56,9 @@ ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <ContextLayer />
+        <AlertProvider template={AlertTemplate} {...options}>
+          <ContextLayer />
+        </AlertProvider>
       </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>,

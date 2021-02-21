@@ -1,38 +1,51 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
+import { useCreateBlogPage } from '../../../hooks';
+import { createBlogValidationSchema } from '../../../validations';
 import Layout from '../../common/layout/Layout';
 import { FormFieldWrapper, FormButtonWrapper } from '../authpage/components';
 const CreateBlogPage = () => {
+  const { data, currentUserLoading, createBlogHandler } = useCreateBlogPage();
   return (
     <Layout>
       <h1>create blog</h1>
       <Formik
         initialValues={{
           title: '',
-          body: '',
+          content: '',
         }}
-        onSubmit
+        validationSchema={createBlogValidationSchema}
+        onSubmit={async (values, actions) => {
+          await createBlogHandler(values);
+
+          actions.resetForm();
+        }}
       >
-        {({ isSubmitting, errors }) => {
+        {({ isSubmitting, errors, touched }) => {
           return (
             <Form>
               <FormFieldWrapper>
                 <h3>Title</h3>
                 <Field type="text" name="title" />
-                <ErrorMessage name="title" component="div" />
+                {touched.title && <ErrorMessage name="title" component="div" />}
               </FormFieldWrapper>
 
               <FormFieldWrapper>
                 <h3>Body</h3>
                 <Field
                   as="textarea"
-                  name="body"
+                  name="content"
                   style={{ resize: 'none', width: '50vw', height: '30vh' }}
                 />
-                <ErrorMessage name="body" component="div" />
+                {touched.content && (
+                  <ErrorMessage name="content" component="div" />
+                )}
               </FormFieldWrapper>
 
-              <FormButtonWrapper type="button" disabled={isSubmitting}>
+              <FormButtonWrapper
+                type="submit"
+                disabled={isSubmitting || currentUserLoading}
+              >
                 Create Blog
               </FormButtonWrapper>
             </Form>
