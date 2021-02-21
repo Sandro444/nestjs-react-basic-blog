@@ -37,7 +37,7 @@ type Query {
   getString: String!
   getCurrentUser: User!
   allBlogs(filter: AllBlogsFilterInput): [Blog!]!
-  findOneBlog(record: FindOneBlogRecord!): Blog!
+  getOneBlog(record: GetOneBlogRecord!): Blog!
 }
 
 input AllBlogsFilterInput {
@@ -51,7 +51,7 @@ enum SortEnum {
   DESC
 }
 
-input FindOneBlogRecord {
+input GetOneBlogRecord {
   id: Int!
 }
 
@@ -60,7 +60,7 @@ type Mutation {
   registerUser(args: RegisterUserInput!): User!
   createBlog(record: CreateBlogRecord!): Blog!
   updateBlog(record: UpdateBlogRecord!): Blog!
-  deleteBlog(record: FindOneBlogRecord!): String!
+  deleteBlog(record: GetOneBlogRecord!): String!
 }
 
 input Args {

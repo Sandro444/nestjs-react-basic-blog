@@ -1,4 +1,4 @@
-import { useLatestBlogs } from '../../../hooks/pages/blogspage/useLatestBlogs';
+import { useLatestBlogs } from '../../../hooks';
 import { Spinner } from '../../../components/common/spinner/Spinner';
 import BlogPreview from './BlogPreview';
 

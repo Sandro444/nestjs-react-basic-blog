@@ -18,6 +18,14 @@ export const BlogPreviewHeader = styled.h2`
   padding: 0;
 `;
 
+export const BlogSeeMoreButton = styled.button`
+  width: 50px;
+  height: 20px;
+  background-color: white;
+  border: 1px solid black;
+  color: red;
+`;
+
 export const BlogPreviewContent = styled.p`
   color: grey;
   border-bottom: 1px solid black;

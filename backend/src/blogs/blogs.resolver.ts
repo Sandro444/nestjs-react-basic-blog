@@ -4,7 +4,7 @@ import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
 import { Blog } from './blog.entity';
 import { BlogsService } from './blogs.service';
 import { CreateBlogArgs } from './dto/create-blog.dto';
-import { FindOneBlogArgs } from './dto/finde-one-blog.dto';
+import { GetOneBlogArgs } from './dto/get-one-blog.dto';
 import { UpdateBlogArgs } from './dto/update-blog.dto';
 import { AllBlogsFilter } from './dto/all-blogs.filter';
 @Resolver()
@@ -31,13 +31,13 @@ export class BlogsResolver {
 
   @UseGuards(GqlAuthGuard)
   @Query((returns) => Blog)
-  async findOneBlog(@Args() findOneBlogArgs: FindOneBlogArgs): Promise<Blog> {
-    return this.blogsService.findOneBlog(findOneBlogArgs);
+  async getOneBlog(@Args() getOneBlogArgs: GetOneBlogArgs): Promise<Blog> {
+    return this.blogsService.getOneBlog(getOneBlogArgs);
   }
 
   @UseGuards(GqlAuthGuard)
   @Mutation((returns) => String)
-  async deleteBlog(@Args() deleteBlogArgs: FindOneBlogArgs): Promise<string> {
+  async deleteBlog(@Args() deleteBlogArgs: GetOneBlogArgs): Promise<string> {
     return this.blogsService.deleteBlog(deleteBlogArgs);
   }
 }
