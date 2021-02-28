@@ -21,6 +21,10 @@ export class Blog {
   @Column({ type: 'timestamp', default: new Date(), name: 'created_at' })
   createdAt: Date;
 
+  @Field((type) => Date)
+  @Column({ type: 'timestamp', default: new Date(), name: 'new_col' })
+  desc: Date;
+
   @Field(() => User)
   @ManyToOne((type) => User, (user) => user.blogs)
   author: User;
