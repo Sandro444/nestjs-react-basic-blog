@@ -5,7 +5,12 @@ import { createBlogValidationSchema } from '../../../validations';
 import Layout from '../../common/layout/Layout';
 import { FormFieldWrapper, FormButtonWrapper } from '../authpage/components';
 const CreateBlogPage = () => {
-  const { data, currentUserLoading, createBlogHandler } = useCreateBlogPage();
+  const {
+    data,
+    currentUserLoading,
+    createBlogHandler,
+    uploadImageToServer,
+  } = useCreateBlogPage();
   return (
     <Layout>
       <h1>create blog</h1>
@@ -21,7 +26,7 @@ const CreateBlogPage = () => {
           actions.resetForm();
         }}
       >
-        {({ isSubmitting, errors, touched }) => {
+        {({ isSubmitting, errors, touched, setFieldValue, values }) => {
           return (
             <Form>
               <FormFieldWrapper>
@@ -29,6 +34,23 @@ const CreateBlogPage = () => {
                 <Field type="text" name="title" />
                 {touched.title && <ErrorMessage name="title" component="div" />}
               </FormFieldWrapper>
+
+              <FormFieldWrapper>
+                <h3>image</h3>
+                <input
+                  type="file"
+                  onChange={(event) => {
+                    uploadImageToServer(event.currentTarget.files);
+                  }}
+                />
+                {touched.image && <ErrorMessage name="image" component="div" />}
+              </FormFieldWrapper>
+
+              <div>
+                {console.log(values.image)}
+                <h1>img</h1>
+                {values.image && <img></img>}
+              </div>
 
               <FormFieldWrapper>
                 <h3>Body</h3>
