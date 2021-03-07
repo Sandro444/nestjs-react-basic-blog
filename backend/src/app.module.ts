@@ -6,13 +6,17 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BlogsModule } from './blogs/blogs.module';
-
+import { FilesModule } from './files/files.module';
 @Module({
   imports: [
     GraphQLModule.forRoot({
-      include: [AuthModule, UsersModule, BlogsModule],
+      include: [AuthModule, UsersModule, BlogsModule, FilesModule],
       playground: true,
       autoSchemaFile: 'schema.gql',
+      uploads: {
+        maxFileSize: 30000000,
+        maxFiles: 6,
+      },
     }),
     AuthModule,
     UsersModule,
@@ -36,6 +40,7 @@ import { BlogsModule } from './blogs/blogs.module';
         migrationsDir: 'src/migration',
       },
     }),
+    FilesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

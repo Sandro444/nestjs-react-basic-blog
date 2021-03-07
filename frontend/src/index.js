@@ -9,8 +9,9 @@ import {
   ApolloProvider,
   HttpLink,
   ApolloLink,
-  concat,
+  split,
 } from '@apollo/client';
+import { createUploadLink } from 'apollo-upload-client';
 import { onError } from '@apollo/client/link/error';
 
 import { transitions, positions, Provider as AlertProvider } from 'react-alert';
@@ -26,16 +27,30 @@ const options = {
   transition: transitions.SCALE,
 };
 
+const uploadLink = createUploadLink({
+  uri: 'http://localhost:3001/graphql',
+  headers: {
+    'keep-alive': 'true',
+  },
+});
+
 const useLogoutWrapper = () => {
   const { logOut } = useAuth();
   logOut();
 };
 
-const httpLink = new HttpLink({ uri: 'http://localhost:3001/graphql' });
+const httpLink = new HttpLink(
+  { uri: 'http://localhost:3001/graphql' },
+  (operation, forward) => {
+    return forward(operation);
+  }
+);
 
 const logoutLink = onError(({ networkError }) => {
+  console.log('logout link');
   if (networkError.statusCode === 401) useLogoutWrapper();
 });
+
 const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext(({ headers = {} }) => ({
     headers: {
@@ -47,8 +62,18 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   return forward(operation);
 });
 
+const httpLinkWithAuth = authMiddleware.concat(httpLink);
+const uploadLinkWithAuth = authMiddleware.concat(uploadLink);
+
+const directionalLink = split(
+  (operation) => {
+    return !!operation.variables.file;
+  },
+  uploadLinkWithAuth,
+  httpLinkWithAuth
+);
 const client = new ApolloClient({
-  link: concat(authMiddleware, httpLink, logoutLink),
+  link: directionalLink,
   cache: new InMemoryCache(),
 });
 
