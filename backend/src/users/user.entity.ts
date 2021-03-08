@@ -22,7 +22,11 @@ export class User {
   password: string;
 
   @Field((type) => Date)
-  @Column({ type: 'timestamp', default: new Date(), name: 'created_at' })
+  @Column({
+    type: 'timestamp',
+    default: 'current_timestamp',
+    name: 'created_at',
+  })
   createdAt: Date;
 
   @OneToMany((type) => Blog, (blog) => blog.author)

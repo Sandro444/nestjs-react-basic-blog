@@ -1,7 +1,13 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { User } from 'src/users/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToOne,
+} from 'typeorm';
+import { File } from '../files/file.entity';
 @ObjectType()
 @Entity()
 export class Blog {
@@ -18,14 +24,18 @@ export class Blog {
   content: string;
 
   @Field((type) => Date)
-  @Column({ type: 'timestamp', default: new Date(), name: 'created_at' })
+  @Column({
+    type: 'timestamp',
+    default: 'CURRENT_TIMESTAMP',
+    name: 'created_at',
+  })
   createdAt: Date;
-
-  @Field((type) => Date)
-  @Column({ type: 'timestamp', default: new Date(), name: 'new_col' })
-  desc: Date;
 
   @Field(() => User)
   @ManyToOne((type) => User, (user) => user.blogs)
   author: User;
+
+  /* @Field((type) => File, { nullable: true })
+  @OneToOne((type) => File, { nullable: true })
+  file?: File; */
 }

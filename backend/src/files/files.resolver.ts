@@ -4,10 +4,11 @@ import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
 import { GraphQLUpload } from 'apollo-server-express';
 import { FileUpload } from 'graphql-upload';
 import { createWriteStream } from 'fs';
-
+import { File } from './file.entity';
+import { FilesService } from './files.service';
 @Resolver()
 export class FilesResolver {
-  constructor() {}
+  constructor(private readonly filesService: FilesService) {}
 
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Boolean)
@@ -15,11 +16,19 @@ export class FilesResolver {
     @Args({ name: 'file', type: () => GraphQLUpload })
     { createReadStream, filename }: FileUpload,
   ): Promise<boolean> {
-    return new Promise(async (resolve, reject) =>
+    const promise = new Promise(async (resolve, reject) =>
       createReadStream()
         .pipe(createWriteStream(`./uploads/${filename}`))
         .on('finish', () => resolve(true))
         .on('error', () => reject(false)),
     );
+
+    try {
+      await promise;
+      await this.filesService.saveFile(filename);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

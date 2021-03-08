@@ -1,4 +1,11 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { FilesResolver } from './files.resolver';
-@Module({ providers: [FilesResolver] })
+import { FileRepository } from './file.repository';
+import { File } from './file.entity';
+import { FilesService } from './files.service';
+@Module({
+  imports: [TypeOrmModule.forFeature([FileRepository, File])],
+  providers: [FilesResolver, FilesService],
+})
 export class FilesModule {}
