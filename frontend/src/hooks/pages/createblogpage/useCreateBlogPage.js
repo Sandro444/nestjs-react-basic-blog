@@ -29,7 +29,7 @@ const useCreateBlogPage = () => {
   });
 
   const uploadImageToServer = async (file) => {
-    await uploadImage({
+    return await uploadImage({
       variables: {
         file,
       },
@@ -52,14 +52,14 @@ const useCreateBlogPage = () => {
 
   const createBlogHandler = async (values) => {
     try {
-      await uploadImageToServer(values.image.file);
-
+      const file = await uploadImageToServer(values.image.file);
       await createBlog({
         variables: {
           record: {
             title: values.title,
             content: values.content,
             author: data?.getCurrentUser?.id,
+            file: file?.data?.uploadFile,
           },
         },
       });

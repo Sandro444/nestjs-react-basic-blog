@@ -37,7 +37,6 @@ const CreateBlogPage = () => {
         {({ isSubmitting, errors, touched, setFieldValue, values }) => {
           return (
             <Form>
-              {console.log('value', values)}
               <FormFieldWrapper>
                 <h3>Title</h3>
                 <Field type="text" name="title" />
