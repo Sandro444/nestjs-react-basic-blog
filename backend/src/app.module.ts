@@ -29,10 +29,10 @@ import { FilesModule } from './files/files.module';
       username: 'postgres',
       password: 'postgres',
       database: 'blog-example-db',
-      synchronize: true,
-      entities: ['dist/**/*.entity{.ts,.js}'],
+      synchronize: false,
       subscribers: ['src/**.module/*-subscriber.ts'],
-      migrations: ['src/migrations/*.ts'],
+      entities: ['dist/**/*.entity.js'],
+      migrations: ['dist/migrations/*.js'],
 
       migrationsTableName: 'migration',
 

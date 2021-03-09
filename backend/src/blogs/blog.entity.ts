@@ -6,6 +6,8 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   OneToOne,
+  OneToMany,
+  JoinColumn,
 } from 'typeorm';
 import { File } from '../files/file.entity';
 @ObjectType()
@@ -26,7 +28,7 @@ export class Blog {
   @Field((type) => Date)
   @Column({
     type: 'timestamp',
-    default: 'CURRENT_TIMESTAMP',
+    default: () => 'CURRENT_TIMESTAMP',
     name: 'created_at',
   })
   createdAt: Date;
@@ -35,7 +37,8 @@ export class Blog {
   @ManyToOne((type) => User, (user) => user.blogs)
   author: User;
 
-  /* @Field((type) => File, { nullable: true })
-  @OneToOne((type) => File, { nullable: true })
-  file?: File; */
+  @Field((type) => File, { nullable: true })
+  @OneToOne((type) => File)
+  @JoinColumn({ name: 'image' })
+  file: File;
 }

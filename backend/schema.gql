@@ -2,19 +2,26 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Blog {
+type File {
   id: Float!
-  title: String!
-  content: String!
+  name: String!
+  url: String!
   createdAt: DateTime!
-  desc: DateTime!
-  author: User!
 }
 
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+type Blog {
+  id: Float!
+  title: String!
+  content: String!
+  createdAt: DateTime!
+  author: User!
+  file: File
+}
 
 type User {
   id: Float!
@@ -62,7 +69,7 @@ type Mutation {
   createBlog(record: CreateBlogRecord!): Blog!
   updateBlog(record: UpdateBlogRecord!): Blog!
   deleteBlog(record: GetOneBlogRecord!): String!
-  uploadFile(file: Upload!): Boolean!
+  uploadFile(file: Upload!): Int!
 }
 
 input Args {
@@ -81,6 +88,7 @@ input CreateBlogRecord {
   title: String!
   content: String!
   author: Int
+  file: Int
 }
 
 input UpdateBlogRecord {

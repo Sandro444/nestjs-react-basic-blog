@@ -1,5 +1,12 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, ArgsType, Mutation, Resolver, Query } from '@nestjs/graphql';
+import {
+  Args,
+  ArgsType,
+  Mutation,
+  Resolver,
+  Query,
+  Int,
+} from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
 import { GraphQLUpload } from 'apollo-server-express';
 import { FileUpload } from 'graphql-upload';
@@ -11,7 +18,7 @@ export class FilesResolver {
   constructor(private readonly filesService: FilesService) {}
 
   @UseGuards(GqlAuthGuard)
-  @Mutation(() => Boolean)
+  @Mutation(() => Int)
   async uploadFile(
     @Args({ name: 'file', type: () => GraphQLUpload })
     { createReadStream, filename }: FileUpload,
@@ -25,9 +32,9 @@ export class FilesResolver {
 
     try {
       await promise;
-      await this.filesService.saveFile(filename);
-      return true;
+      return await this.filesService.saveFile(filename);
     } catch (e) {
+      console.log(e, 'error');
       return false;
     }
   }
