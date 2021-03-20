@@ -9,8 +9,11 @@ class CreateBlogRecord {
   @Field((type) => String)
   content: string;
 
-  @Field(() => Int,{nullable:true})
+  @Field(() => Int, { nullable: true })
   author: number;
+
+  @Field(() => Int, { nullable: true })
+  file: number;
 }
 
 @ArgsType()

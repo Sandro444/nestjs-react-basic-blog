@@ -20,6 +20,7 @@ export class BlogsService {
       title: createBlogArgs.record.title,
       author: createBlogArgs.record.author,
       content: createBlogArgs.record.content,
+      file: createBlogArgs.record.file,
     };
     const createdBlog = await this.blogRepository.save(blog);
 

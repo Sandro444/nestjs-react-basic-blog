@@ -1,25 +1,21 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Blog } from 'src/blogs/blog.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 
 @ObjectType()
 @Entity()
-export class User {
+export class File {
   @PrimaryGeneratedColumn()
   @Field()
-  id: number;
+  id?: number;
 
   @Field()
   @Column()
-  username: string;
+  name: string;
 
   @Field()
   @Column()
-  email: string;
-
-  @Field()
-  @Column({ default: true })
-  password: string;
+  url: string;
 
   @Field((type) => Date)
   @Column({
@@ -28,7 +24,4 @@ export class User {
     name: 'created_at',
   })
   createdAt: Date;
-
-  @OneToMany((type) => Blog, (blog) => blog.author)
-  blogs?: Blog[];
 }

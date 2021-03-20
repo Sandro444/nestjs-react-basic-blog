@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import { useCreateBlogPage } from '../../../hooks';
@@ -10,6 +12,8 @@ const CreateBlogPage = () => {
     currentUserLoading,
     createBlogHandler,
     uploadImageToServer,
+    imageHandler,
+    file,
   } = useCreateBlogPage();
   return (
     <Layout>
@@ -17,6 +21,10 @@ const CreateBlogPage = () => {
       <Formik
         initialValues={{
           title: '',
+          image: {
+            file: '',
+            imagePreviewUrl: '',
+          },
           content: '',
         }}
         validationSchema={createBlogValidationSchema}
@@ -39,17 +47,21 @@ const CreateBlogPage = () => {
                 <h3>image</h3>
                 <input
                   type="file"
-                  onChange={(event) => {
-                    uploadImageToServer(event.currentTarget.files);
-                  }}
+                  accept="image/*"
+                  onChange={(event) => imageHandler(event, setFieldValue)}
                 />
                 {touched.image && <ErrorMessage name="image" component="div" />}
               </FormFieldWrapper>
 
               <div>
-                {console.log(values.image)}
-                <h1>img</h1>
-                {values.image && <img></img>}
+                <h3>image preview</h3>
+                {values.image.file?.name && (
+                  <img
+                    height="300"
+                    width="300"
+                    src={values.image.imagePreviewUrl}
+                  ></img>
+                )}
               </div>
 
               <FormFieldWrapper>
