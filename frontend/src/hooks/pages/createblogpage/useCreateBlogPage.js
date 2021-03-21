@@ -1,18 +1,19 @@
-import { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { useAlert } from 'react-alert';
+import { useState } from "react";
+import { useMutation } from "@apollo/client";
+import * as axios from "axios";
+import { useAlert } from "react-alert";
 import {
   createBlogMutation,
   AllBlogsQuery,
   uploadBlogImage,
-} from '../../../gql-queries/';
-import allBlogsQuery from '../../../gql-queries/queries/allBlogs';
-import { useAuth } from '../../../hooks';
+} from "../../../gql-queries/";
+import allBlogsQuery from "../../../gql-queries/queries/allBlogs";
+import { useAuth } from "../../../hooks";
 const useCreateBlogPage = () => {
   const alert = useAlert();
   const { data, currentUserLoading } = useAuth();
 
-  const [file, setFile] = useState('');
+  const [file, setFile] = useState("");
   const [uploadImage] = useMutation(uploadBlogImage);
   const [createBlog, { loading }] = useMutation(createBlogMutation, {
     refetchQueries: [
@@ -20,7 +21,7 @@ const useCreateBlogPage = () => {
         query: AllBlogsQuery,
         variables: {
           filter: {
-            createdAtSort: 'DESC',
+            createdAtSort: "DESC",
             take: 5,
           },
         },
@@ -29,11 +30,17 @@ const useCreateBlogPage = () => {
   });
 
   const uploadImageToServer = async (file) => {
-    return await uploadImage({
-      variables: {
-        file,
-      },
-    });
+    const data = new FormData();
+    data.append("file", file);
+
+    const response = await axios.post(
+      "http://localhost:3001/files/upload",
+      data,
+      {
+        contentType: "multipart/form-data",
+      }
+    );
+    return response.data.data.fileId;
   };
 
   const imageHandler = async (event, setFieldValue) => {
@@ -42,7 +49,7 @@ const useCreateBlogPage = () => {
     let file = event.currentTarget.files[0];
 
     reader.onloadend = () => {
-      setFieldValue('image', {
+      setFieldValue("image", {
         file: file,
         imagePreviewUrl: reader.result,
       });
@@ -52,20 +59,20 @@ const useCreateBlogPage = () => {
 
   const createBlogHandler = async (values) => {
     try {
-      const file = await uploadImageToServer(values.image.file);
+      const fileId = await uploadImageToServer(values.image.file);
       await createBlog({
         variables: {
           record: {
             title: values.title,
             content: values.content,
             author: data?.getCurrentUser?.id,
-            file: file?.data?.uploadFile,
+            file: fileId,
           },
         },
       });
-      alert.success('Blog Created Successfully');
+      alert.success("Blog Created Successfully");
     } catch (e) {
-      alert.error('Error Creating Blog');
+      alert.error("Error Creating Blog");
       console.log(e);
     }
   };

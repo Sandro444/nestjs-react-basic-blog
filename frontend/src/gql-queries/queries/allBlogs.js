@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 const allBlogsQuery = gql`
   query allBlogs($filter: AllBlogsFilterInput) {
     allBlogs(filter: $filter) {
@@ -8,6 +8,10 @@ const allBlogsQuery = gql`
       author {
         username
         email
+      }
+      file {
+        id
+        url
       }
     }
   }

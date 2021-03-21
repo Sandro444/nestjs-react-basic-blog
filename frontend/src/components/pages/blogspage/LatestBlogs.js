@@ -1,6 +1,6 @@
-import { useLatestBlogs } from '../../../hooks';
-import { Spinner } from '../../../components/common/spinner/Spinner';
-import BlogPreview from './BlogPreview';
+import { useLatestBlogs } from "../../../hooks";
+import { Spinner } from "../../../components/common/spinner/Spinner";
+import BlogPreview from "./BlogPreview";
 
 const LatestBlogs = () => {
   const { blogsData, blogsLoading } = useLatestBlogs();
@@ -16,6 +16,8 @@ const LatestBlogs = () => {
               title={blog.title}
               content={blog.content}
               id={blog.id}
+              fileUrl={blog.file.url}
+              fileId={blog.file.id}
             />
           );
         })}

@@ -1,16 +1,20 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import {
   BlogPreviewWrapper,
   BlogPreviewHeader,
   BlogPreviewContent,
   BlogPreviewButtons,
   BlogSeeMoreButton,
-} from './components';
+} from "./components";
 
-const BlogPreview = ({ title, content, id }) => {
+const BlogPreview = ({ title, content, id, fileUrl, fileId }) => {
   return (
     <BlogPreviewWrapper>
-      <BlogPreviewHeader>{title}</BlogPreviewHeader>
+      <BlogPreviewHeader>
+        {" "}
+        <img src={fileUrl} height={100} width={100} />
+        <h1>{title}</h1>
+      </BlogPreviewHeader>
       <BlogPreviewContent>{content}</BlogPreviewContent>
       <BlogPreviewButtons>
         <Link to={`/blogs/${id}`}>

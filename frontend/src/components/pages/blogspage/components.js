@@ -1,19 +1,21 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const BlogPreviewWrapper = styled.div`
   width: 60%;
-  height: 140px;
+  height: 280px;
   margin: 5px;
   border: 2px solid black;
   display: grid;
-  grid-template-rows: 2fr 4fr 1fr;
+  grid-template-rows: 3fr 4fr 1fr;
   box-sizing: border-box;
 `;
 
-export const BlogPreviewHeader = styled.h2`
+export const BlogPreviewHeader = styled.div`
   border-bottom: 1px solid black;
   box-sizing: border-box;
   text-align: center;
+  display: flex;
+  align-items: center;
   margin: 0;
   padding: 0;
 `;

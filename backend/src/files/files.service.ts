@@ -14,8 +14,8 @@ export class FilesService {
 
   async saveFile(filename: string): Promise<any> {
     const file = new File();
-    file.name = filename.split('.')[0];
-    file.url = process.env.BACKEND_URL.concat(`/uploads/${filename}`);
+    file.name = filename;
+    file.url = process.env.BACKEND_URL.concat(`/files/getfile/${filename}`);
     const savedFile = await this.fileRepository.save(file);
     return savedFile.id;
   }

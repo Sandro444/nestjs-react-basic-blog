@@ -7,21 +7,29 @@ import { GetOneBlogArgs } from './dto/get-one-blog.dto';
 import { UpdateBlogArgs, UpdateBlogRecord } from './dto/update-blog.dto';
 import { AllBlogsFilter } from './dto/all-blogs.filter';
 import { FindManyOptions } from 'typeorm';
+import { FileRepository } from 'src/files/file.repository';
 
 @Injectable()
 export class BlogsService {
   constructor(
     private readonly blogRepository: BlogRepository,
     private readonly usersRepository: UserRepository,
+    private readonly filesRepository: FileRepository,
   ) {}
 
   async createBlog(createBlogArgs: CreateBlogArgs): Promise<Blog> {
-    const blog: any = {
-      title: createBlogArgs.record.title,
-      author: createBlogArgs.record.author,
-      content: createBlogArgs.record.content,
-      file: createBlogArgs.record.file,
-    };
+    const blog = new Blog();
+    blog.title = createBlogArgs.record.title;
+    const blogAuthor = await this.usersRepository.findOne(
+      createBlogArgs.record.author,
+    );
+    blog.author = blogAuthor;
+    blog.content = createBlogArgs.record.content;
+    const blogFile = await this.filesRepository.findOne(
+      createBlogArgs.record.file,
+    );
+    blog.file = blogFile;
+
     const createdBlog = await this.blogRepository.save(blog);
 
     const returnBlogType = await this.blogRepository.findOne(createdBlog.id, {
@@ -33,8 +41,9 @@ export class BlogsService {
 
   async allBlogs(filter?: AllBlogsFilter): Promise<Blog[]> {
     const props: Partial<FindManyOptions<Blog>> = {
-      relations: ['author'],
+      relations: ['author', 'file'],
     };
+
     if (filter?.filter?.createdAtSort) {
       props.order = { createdAt: filter?.filter?.createdAtSort };
     }
@@ -44,12 +53,13 @@ export class BlogsService {
     if (filter?.filter?.skip) {
       props.skip = filter?.filter?.skip;
     }
-    return await this.blogRepository.find(props);
+    const blogs = await this.blogRepository.find(props);
+    return blogs;
   }
 
   async getOneBlog(getOneBlogArgs: GetOneBlogArgs): Promise<Blog> {
     return await this.blogRepository.findOne(getOneBlogArgs.record.id, {
-      relations: ['author'],
+      relations: ['author', 'file'],
     });
   }
 
@@ -63,7 +73,7 @@ export class BlogsService {
       ...args,
     });
     return await this.blogRepository.findOne(id, {
-      relations: ['author'],
+      relations: ['author', 'file'],
     });
   }
 

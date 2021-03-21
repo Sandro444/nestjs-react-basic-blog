@@ -7,8 +7,13 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BlogsModule } from './blogs/blogs.module';
 import { FilesModule } from './files/files.module';
+import { FilesController } from './files/files.controller';
+import { MulterModule } from '@nestjs/platform-express';
 @Module({
   imports: [
+    MulterModule.register({
+      dest: './uploads',
+    }),
     GraphQLModule.forRoot({
       include: [AuthModule, UsersModule, BlogsModule, FilesModule],
       playground: true,
@@ -42,7 +47,7 @@ import { FilesModule } from './files/files.module';
     }),
     FilesModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, FilesController],
   providers: [AppService],
 })
 export class AppModule {}
