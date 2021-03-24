@@ -9,6 +9,7 @@ import { BlogsModule } from './blogs/blogs.module';
 import { FilesModule } from './files/files.module';
 import { FilesController } from './files/files.controller';
 import { MulterModule } from '@nestjs/platform-express';
+import { RolesModule } from './roles/roles.module';
 @Module({
   imports: [
     MulterModule.register({
@@ -46,6 +47,7 @@ import { MulterModule } from '@nestjs/platform-express';
       },
     }),
     FilesModule,
+    RolesModule,
   ],
   controllers: [AppController, FilesController],
   providers: [AppService],
