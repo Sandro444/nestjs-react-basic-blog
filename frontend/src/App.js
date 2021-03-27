@@ -1,28 +1,29 @@
-import { useContext, useReducer } from 'react';
+import { useContext, useReducer } from "react";
 
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from "react-router-dom";
 
-import { useAuth } from './hooks';
+import { useAuth } from "./hooks";
 
 import {
   AuthContext,
   AuthReducer,
   initialState,
-} from './context/authcontext/authContext';
+} from "./context/authcontext/authContext";
 
-import AuthPage from './components/pages/authpage/AuthPage';
-import BlogsPage from './components/pages/blogspage/BlogsPage';
-import HomePage from './components/pages/homepage/HomePage';
-import CreateBlogPage from './components/pages/createblogpage/CreateBlogPage';
+import AuthPage from "./components/pages/authpage/AuthPage";
+import BlogsPage from "./components/pages/blogspage/BlogsPage";
+import HomePage from "./components/pages/homepage/HomePage";
+import CreateBlogPage from "./components/pages/createblogpage/CreateBlogPage";
 
-import './App.css';
-import ProfilePage from './components/pages/profilepage/ProfilePage';
-import { Spinner } from './components/common/spinner/Spinner';
+import "./App.css";
+import ProfilePage from "./components/pages/profilepage/ProfilePage";
+import { Spinner } from "./components/common/spinner/Spinner";
 
 function App() {
   const { data, currentUserLoading } = useAuth();
   const [state, dispatch] = useContext(AuthContext);
 
+  console.log("app", state, data);
   return (
     <Switch>
       {!state?.authorized && currentUserLoading === false && (
@@ -65,13 +66,18 @@ function App() {
           <Route path="/profile">
             <ProfilePage />
           </Route>
-          <Route path="/create-blog">
-            <CreateBlogPage />
-          </Route>
+          {["administrator", "publisher"].includes(
+            data?.getCurrentUser?.role?.name
+          ) && (
+            <Route path="/create-blog">
+              <CreateBlogPage />
+            </Route>
+          )}
+
           <Route exact path="/">
             {!state?.authorized ? <HomePage /> : <Redirect to="/auth/login" />}
           </Route>
-          <Route path="/">{'404 not found'}</Route>
+          <Route path="/">{"404 not found"}</Route>
         </Switch>
       )}
     </Switch>
