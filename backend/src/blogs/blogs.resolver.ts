@@ -7,11 +7,13 @@ import { CreateBlogArgs } from './dto/create-blog.dto';
 import { GetOneBlogArgs } from './dto/get-one-blog.dto';
 import { UpdateBlogArgs } from './dto/update-blog.dto';
 import { AllBlogsFilter } from './dto/all-blogs.filter';
+import { AuthRoles } from 'src/auth/gql-role.guard';
+import { RoleTypes } from 'src/roles/role.entity';
 @Resolver()
 export class BlogsResolver {
   constructor(private blogsService: BlogsService) {}
 
-  @UseGuards(GqlAuthGuard)
+  @AuthRoles(RoleTypes.Administrator, RoleTypes.Publisher)
   @Mutation((returns) => Blog)
   async createBlog(@Args() createBlogArgs: CreateBlogArgs): Promise<Blog> {
     return this.blogsService.createBlog(createBlogArgs);
@@ -23,6 +25,7 @@ export class BlogsResolver {
     return this.blogsService.allBlogs(filter);
   }
 
+  @AuthRoles(RoleTypes.Administrator, RoleTypes.Publisher)
   @UseGuards(GqlAuthGuard)
   @Mutation((returns) => Blog)
   async updateBlog(@Args() updateBlogArgs: UpdateBlogArgs): Promise<Blog> {
@@ -35,6 +38,7 @@ export class BlogsResolver {
     return this.blogsService.getOneBlog(getOneBlogArgs);
   }
 
+  @AuthRoles(RoleTypes.Administrator, RoleTypes.Publisher)
   @UseGuards(GqlAuthGuard)
   @Mutation((returns) => String)
   async deleteBlog(@Args() deleteBlogArgs: GetOneBlogArgs): Promise<string> {

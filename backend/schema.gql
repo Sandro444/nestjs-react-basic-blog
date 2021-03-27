@@ -23,12 +23,18 @@ type Blog {
   file: File
 }
 
+type Role {
+  id: Float!
+  name: String!
+}
+
 type User {
   id: Float!
   username: String!
   email: String!
   password: String!
   createdAt: DateTime!
+  role: Role!
 }
 
 type UserType {

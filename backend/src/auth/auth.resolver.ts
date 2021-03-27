@@ -7,6 +7,7 @@ import { GqlAuthGuard } from './gql-auth.guard';
 import { Req, UseGuards } from '@nestjs/common';
 import { CurrentUser } from './current-user.decorator';
 import { User } from 'src/users/user.entity';
+import { AuthRoles } from './gql-role.guard';
 @Resolver()
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
