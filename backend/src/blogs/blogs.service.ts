@@ -59,7 +59,7 @@ export class BlogsService {
 
   async getOneBlog(getOneBlogArgs: GetOneBlogArgs): Promise<Blog> {
     return await this.blogRepository.findOne(getOneBlogArgs.record.id, {
-      relations: ['author', 'file'],
+      relations: ['author', 'file', 'comments', 'comments.author'],
     });
   }
 

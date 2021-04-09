@@ -5,7 +5,7 @@ import { useAlert } from "react-alert";
 import {
   createBlogMutation,
   AllBlogsQuery,
-  uploadBlogImage,
+  uploadBlogImageMutation,
 } from "../../../gql-queries/";
 import allBlogsQuery from "../../../gql-queries/queries/allBlogs";
 import { useAuth } from "../../../hooks";
@@ -14,7 +14,7 @@ const useCreateBlogPage = () => {
   const { data, currentUserLoading } = useAuth();
 
   const [file, setFile] = useState("");
-  const [uploadImage] = useMutation(uploadBlogImage);
+  const [uploadImage] = useMutation(uploadBlogImageMutation);
   const [createBlog, { loading }] = useMutation(createBlogMutation, {
     refetchQueries: [
       {

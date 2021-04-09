@@ -10,13 +10,20 @@ import { FilesModule } from './files/files.module';
 import { FilesController } from './files/files.controller';
 import { MulterModule } from '@nestjs/platform-express';
 import { RolesModule } from './roles/roles.module';
+import { CommentsModule } from './comments/comments.module';
 @Module({
   imports: [
     MulterModule.register({
       dest: './uploads',
     }),
     GraphQLModule.forRoot({
-      include: [AuthModule, UsersModule, BlogsModule, FilesModule],
+      include: [
+        AuthModule,
+        UsersModule,
+        BlogsModule,
+        FilesModule,
+        CommentsModule,
+      ],
       playground: true,
       autoSchemaFile: 'schema.gql',
       uploads: {
@@ -48,6 +55,7 @@ import { RolesModule } from './roles/roles.module';
     }),
     FilesModule,
     RolesModule,
+    CommentsModule,
   ],
   controllers: [AppController, FilesController],
   providers: [AppService],

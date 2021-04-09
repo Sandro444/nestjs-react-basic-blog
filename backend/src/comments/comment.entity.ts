@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { Blog } from 'src/blogs/blog.entity';
 import { User } from 'src/users/user.entity';
 import {
   Entity,
@@ -9,22 +10,16 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm';
-import { File } from '../files/file.entity';
-import { Comment } from '../comments/comment.entity';
 @ObjectType()
 @Entity()
-export class Blog {
+export class Comment {
   @PrimaryGeneratedColumn()
   @Field()
   id?: number;
 
   @Field()
   @Column()
-  title: string;
-
-  @Field()
-  @Column()
-  content: string;
+  body: string;
 
   @Field((type) => Date)
   @Column({
@@ -35,15 +30,10 @@ export class Blog {
   createdAt: Date;
 
   @Field(() => User)
-  @ManyToOne((type) => User, (user) => user.blogs)
+  @ManyToOne((type) => User, (user) => user.comments)
   author: User;
 
-  @Field(() => [Comment])
-  @OneToMany((type) => Comment, (comment) => comment.blog)
-  comments: Comment[];
-
-  @Field((type) => File, { nullable: true })
-  @OneToOne((type) => File)
-  @JoinColumn({ name: 'image' })
-  file: File;
+  @Field(() => Blog)
+  @ManyToOne((type) => Blog, (blog) => blog.comments)
+  blog: Blog;
 }

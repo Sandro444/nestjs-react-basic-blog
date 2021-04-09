@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 const singleBlogQuery = gql`
   query getOneBlog($record: GetOneBlogRecord!) {
     getOneBlog(record: $record) {
@@ -9,6 +9,14 @@ const singleBlogQuery = gql`
         username
       }
       createdAt
+      comments {
+        id
+        body
+        createdAt
+        author {
+          username
+        }
+      }
     }
   }
 `;

@@ -7,7 +7,7 @@ import {
   logOutAction,
 } from "../../../context/authcontext/actions";
 const useAuth = () => {
-  const [state, dispatcher] = useContext(AuthContext) || [null, () => null];
+  const [state, dispatcher] = useContext(AuthContext);
   const localAuthToken = useMemo(() => localStorage.getItem("auth-token"), [
     state,
   ]);
@@ -16,6 +16,7 @@ const useAuth = () => {
       dispatcher(logInAction(state));
     }
   }, [state]);
+
   const { data, loading: currentUserLoading, refetch } = useQuery(
     GetCurrentUserQuery,
     {

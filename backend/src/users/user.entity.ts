@@ -1,6 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Blog } from 'src/blogs/blog.entity';
 import { Role } from 'src/roles/role.entity';
+import { Comment } from '../comments/comment.entity';
 import {
   Entity,
   Column,
@@ -39,6 +40,10 @@ export class User {
 
   @OneToMany((type) => Blog, (blog) => blog.author)
   blogs?: Blog[];
+
+  @Field(() => [Comment])
+  @OneToMany((type) => Comment, (comment) => comment.author)
+  comments: Comment[];
 
   @Field((type) => Role)
   @ManyToOne((type) => Role)

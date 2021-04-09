@@ -1,9 +1,11 @@
-import {NavBarWrapper} from './components'
-import NavBarItems from './NavBarItems'
+import { NavBarWrapper } from "./components";
+import NavBarItems from "./NavBarItems";
 const NavBar = () => {
-    return <NavBarWrapper>
-        <NavBarItems />
+  return (
+    <NavBarWrapper>
+      <NavBarItems />
     </NavBarWrapper>
-}
+  );
+};
 
-export default NavBar
+export default NavBar;
