@@ -60,6 +60,7 @@ type Query {
   finduser: UserType!
   getString: String!
   getCurrentUser: User!
+  getAllUsers: [User!]!
   allBlogs(filter: AllBlogsFilterInput): [Blog!]!
   getOneBlog(record: GetOneBlogRecord!): Blog!
 }

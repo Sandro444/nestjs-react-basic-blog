@@ -8,21 +8,26 @@ import {
 } from "../../../context/authcontext/actions";
 const useAuth = () => {
   const [state, dispatcher] = useContext(AuthContext);
-  const localAuthToken = useMemo(() => localStorage.getItem("auth-token"), [
-    state,
-  ]);
+  const localAuthToken = useMemo(
+    () => localStorage.getItem("auth-token"),
+    [state]
+  );
   useEffect(() => {
     if (localAuthToken && state && !state.authorized) {
       dispatcher(logInAction(state));
     }
   }, [state]);
 
-  const { data, loading: currentUserLoading, refetch } = useQuery(
-    GetCurrentUserQuery,
-    {
-      fetchPolicy: "network-only",
-    }
-  );
+  const {
+    data,
+    loading: currentUserLoading,
+    refetch,
+  } = useQuery(GetCurrentUserQuery, {
+    fetchPolicy: "cache-and-network",
+    onError: () => {
+      logOut();
+    },
+  });
 
   useEffect(() => {
     if (currentUserLoading === false && !data) {

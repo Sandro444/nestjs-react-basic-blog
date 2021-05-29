@@ -14,6 +14,7 @@ import AuthPage from "./components/pages/authpage/AuthPage";
 import BlogsPage from "./components/pages/blogspage/BlogsPage";
 import HomePage from "./components/pages/homepage/HomePage";
 import CreateBlogPage from "./components/pages/createblogpage/CreateBlogPage";
+import UsersPage from "./components/pages/userspage/UsersPage";
 
 import "./App.css";
 import ProfilePage from "./components/pages/profilepage/ProfilePage";
@@ -71,6 +72,12 @@ function App() {
           ) && (
             <Route path="/create-blog">
               <CreateBlogPage />
+            </Route>
+          )}
+
+          {["administrator"].includes(data?.getCurrentUser?.role?.name) && (
+            <Route path="/users">
+              <UsersPage />
             </Route>
           )}
 

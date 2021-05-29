@@ -92,4 +92,8 @@ export class UsersService implements OnModuleInit {
       role: userRole,
     });
   }
+
+  async getAllUsers(): Promise<User[]> {
+    return await this.userRepository.find({ relations: ['role'] });
+  }
 }
