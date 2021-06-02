@@ -23,6 +23,7 @@ import { CommentsModule } from './comments/comments.module';
         BlogsModule,
         FilesModule,
         CommentsModule,
+        RolesModule,
       ],
       playground: true,
       autoSchemaFile: 'schema.gql',
