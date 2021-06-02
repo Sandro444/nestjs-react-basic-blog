@@ -96,4 +96,12 @@ export class UsersService implements OnModuleInit {
   async getAllUsers(): Promise<User[]> {
     return await this.userRepository.find({ relations: ['role'] });
   }
+
+  async getOneUser(userId: number): Promise<User> {
+    return await this.userRepository.findOne(userId, { relations: ['role'] });
+  }
+
+  async saveUser(user: User): Promise<User> {
+    return await this.userRepository.save(user);
+  }
 }

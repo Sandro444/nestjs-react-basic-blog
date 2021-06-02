@@ -1,8 +1,21 @@
-import { Text } from "../../util-components";
+import { Text, Button } from "../../util-components";
 
 import { SingleUserRowWrapper, SingleUserRowFormWrapper } from "./components";
 
-export const SingleUser = ({ username, createdAt, role }) => {
+const roleNames = {
+  user: "user",
+  publisher: "publisher",
+  administrator: "administrator",
+};
+
+export const SingleUser = ({
+  username,
+  createdAt,
+  id,
+  role,
+  assignRoleHandler,
+  assignRoleLoading,
+}) => {
   return (
     <SingleUserRowWrapper>
       <div>
@@ -17,7 +30,32 @@ export const SingleUser = ({ username, createdAt, role }) => {
         </Text>
       </div>
 
-      <SingleUserRowFormWrapper></SingleUserRowFormWrapper>
+      <SingleUserRowFormWrapper>
+        <Button
+          padding="5px"
+          margin="10px"
+          onClick={() => assignRoleHandler(id, "User")}
+          disabled={assignRoleLoading || role.name === roleNames.user}
+        >
+          user
+        </Button>
+        <Button
+          padding="5px"
+          margin="10px"
+          onClick={() => assignRoleHandler(id, "Publisher")}
+          disabled={assignRoleLoading || role.name === roleNames.publisher}
+        >
+          publisher
+        </Button>
+        <Button
+          padding="5px"
+          margin="10px"
+          onClick={() => assignRoleHandler(id, "Administrator")}
+          disabled={assignRoleLoading || role.name === roleNames.administrator}
+        >
+          administrator
+        </Button>
+      </SingleUserRowFormWrapper>
     </SingleUserRowWrapper>
   );
 };

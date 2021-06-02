@@ -4,13 +4,21 @@ import { Spinner } from "../../common/spinner/Spinner";
 import { SingleUser } from "./SingleUser";
 
 const UsersPage = () => {
-  const { data, loading } = useUsersPage();
+  const { data, loading, assignRoleHandler, assignRoleLoading } =
+    useUsersPage();
   return (
     <Layout>
       {loading && <Spinner />}
       {data &&
         data?.getAllUsers?.map((user) => {
-          return <SingleUser key={user.id} {...user} />;
+          return (
+            <SingleUser
+              key={user.id}
+              {...user}
+              assignRoleHandler={assignRoleHandler}
+              assignRoleLoading={assignRoleLoading}
+            />
+          );
         })}
     </Layout>
   );

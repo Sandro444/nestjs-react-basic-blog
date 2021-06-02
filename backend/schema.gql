@@ -87,6 +87,7 @@ type Mutation {
   updateBlog(record: UpdateBlogRecord!): Blog!
   deleteBlog(record: GetOneBlogRecord!): String!
   uploadFile(file: Upload!): Int!
+  assignRole(record: AssignRoleRecord!): Boolean!
   createComment(record: CreateCommentRecord!): Comment!
 }
 
@@ -118,6 +119,17 @@ input UpdateBlogRecord {
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
+
+input AssignRoleRecord {
+  userId: Int!
+  roleName: RoleTypes!
+}
+
+enum RoleTypes {
+  User
+  Publisher
+  Administrator
+}
 
 input CreateCommentRecord {
   body: String!
