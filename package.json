@@ -1,7 +1,9 @@
 {
   "dependencies": {
     "@types/lodash": "^4.14.168",
+    "graphql-subscriptions": "^1.2.1",
     "react-alert": "^7.0.2",
-    "react-alert-template-basic": "^1.0.0"
+    "react-alert-template-basic": "^1.0.0",
+    "subscriptions-transport-ws": "^0.9.18"
   }
 }

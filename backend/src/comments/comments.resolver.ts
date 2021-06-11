@@ -1,11 +1,14 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Resolver, Subscription } from '@nestjs/graphql';
 import { CommentsService } from './comments.service';
 import { CreateCommentArgs } from './dto/create-comment.args';
 import { Comment } from './comment.entity';
-import { UseGuards } from '@nestjs/common';
+import { Req, UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
 import { CurrentUser } from 'src/auth/current-user.decorator';
 import { User } from 'src/users/user.entity';
+import { PubSub } from 'graphql-subscriptions';
+
+const pubSub = new PubSub();
 
 @Resolver()
 export class CommentsResolver {
@@ -18,6 +21,21 @@ export class CommentsResolver {
     @CurrentUser() user: User,
   ): Promise<Comment> {
     args.record.author = user.id;
-    return await this.commentservice.createComment(args);
+    const comment = await this.commentservice.createComment(args);
+    pubSub.publish('commentAdded', { commentAdded: comment });
+    return comment;
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Subscription((returns) => Comment, {
+    filter: (payload, variables, context) => {
+      return (
+        context.req.user?.username ===
+        payload.commentAdded.blog.author?.username
+      );
+    },
+  })
+  commentAdded(@Req() req) {
+    return pubSub.asyncIterator('commentAdded');
   }
 }

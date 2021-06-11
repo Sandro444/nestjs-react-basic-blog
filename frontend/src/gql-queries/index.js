@@ -8,6 +8,8 @@ import uploadBlogImageMutation from "./queries/uploadBlogImage";
 import CreateCommentMutation from "./queries/createComment";
 import getAllUsersQuery from "./queries/getAllUsers";
 import AssignRoleMutation from "./queries/assignRole";
+import commentAddedSubscription from "./queries/commentAdded";
+
 export {
   uploadBlogImageMutation,
   LoginMutation,
@@ -19,4 +21,5 @@ export {
   CreateCommentMutation,
   getAllUsersQuery,
   AssignRoleMutation,
+  commentAddedSubscription,
 };

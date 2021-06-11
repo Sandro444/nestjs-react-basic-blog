@@ -1,4 +1,4 @@
-import { useContext, useReducer } from "react";
+import { useContext, useEffect, useReducer } from "react";
 
 import { Redirect, Route, Switch } from "react-router-dom";
 
@@ -19,12 +19,14 @@ import UsersPage from "./components/pages/userspage/UsersPage";
 import "./App.css";
 import ProfilePage from "./components/pages/profilepage/ProfilePage";
 import { Spinner } from "./components/common/spinner/Spinner";
+import { useAlert } from "react-alert";
+import { useComments } from "./hooks/";
 
 function App() {
   const { data, currentUserLoading } = useAuth();
   const [state, dispatch] = useContext(AuthContext);
 
-  console.log("app", state, data);
+  useComments();
   return (
     <Switch>
       {!state?.authorized && currentUserLoading === false && (
