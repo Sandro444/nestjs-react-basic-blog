@@ -24,6 +24,9 @@ export class CommentsService {
     comment.author = commentAuthor;
     comment.body = body;
 
-    return await this.commentRepository.save(comment);
+    const savedComment = await this.commentRepository.save(comment);
+    return await this.commentRepository.findOne(savedComment.id, {
+      relations: ['blog', 'blog.author', 'author'],
+    });
   }
 }

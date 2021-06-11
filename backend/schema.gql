@@ -136,3 +136,7 @@ input CreateCommentRecord {
   blog: Int!
   author: Int
 }
+
+type Subscription {
+  commentAdded: Comment!
+}

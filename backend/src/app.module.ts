@@ -17,6 +17,11 @@ import { CommentsModule } from './comments/comments.module';
       dest: './uploads',
     }),
     GraphQLModule.forRoot({
+      context: ({ req, connection }) => {
+        return connection ? { req: connection.context } : { req };
+      },
+
+      installSubscriptionHandlers: true,
       include: [
         AuthModule,
         UsersModule,
