@@ -9,4 +9,5 @@ export const Button = styled.button`
   border: ${({ border }) => border || "auto"};
   text-decoration: ${({ textDecoration }) => textDecoration || "auto"};
   cursor: pointer;
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
 `;
