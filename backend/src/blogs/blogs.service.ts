@@ -87,4 +87,15 @@ export class BlogsService {
       });
     }
   }
+
+  async getTopBlogs() {
+    const result = await this.blogRepository.find({
+      relations: ['comments', 'author', 'file'],
+    });
+    const map = result.map((blog) => {
+      return { ...blog, commentsCount: blog.comments.length };
+    });
+    const sort = map.sort((a, b) => b.commentsCount - a.commentsCount);
+    return sort.slice(0, 3);
+  }
 }

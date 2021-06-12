@@ -29,6 +29,7 @@ type Blog {
   createdAt: DateTime!
   author: User!
   comments: [Comment!]!
+  commentsCount: Float
   file: File
 }
 
@@ -62,6 +63,7 @@ type Query {
   getCurrentUser: User!
   getAllUsers: [User!]!
   allBlogs(filter: AllBlogsFilterInput): [Blog!]!
+  getTopBlogs: [Blog!]!
   getOneBlog(record: GetOneBlogRecord!): Blog!
 }
 

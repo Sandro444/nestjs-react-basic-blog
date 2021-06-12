@@ -32,6 +32,12 @@ export class BlogsResolver {
     return this.blogsService.updateBlog(updateBlogArgs);
   }
 
+  // @UseGuards(GqlAuthGuard)
+  @Query((returns) => [Blog])
+  async getTopBlogs(): Promise<Blog[]> {
+    return await this.blogsService.getTopBlogs();
+  }
+
   @UseGuards(GqlAuthGuard)
   @Query((returns) => Blog)
   async getOneBlog(@Args() getOneBlogArgs: GetOneBlogArgs): Promise<Blog> {

@@ -8,8 +8,10 @@ import useCreateBlogPage from "./pages/createblogpage/useCreateBlogPage";
 import useProfilePage from "./pages/profilepage/useProfilePage";
 import useUsersPage from "./pages/userspage/useUsersPage";
 import useComments from "./pages/blogspage/useComments";
+import useHomepage from "./pages/homepage/useHomePage";
 
 export {
+  useHomepage,
   useComments,
   useAuth,
   useSingleBlog,
